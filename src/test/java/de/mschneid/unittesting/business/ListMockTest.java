@@ -1,7 +1,6 @@
 package de.mschneid.unittesting.business;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.List;
 
@@ -30,5 +29,12 @@ public class ListMockTest {
        when(mock.get(0)).thenReturn("test");
        assertEquals("test", mock.get(0));
         assertEquals(null, mock.get(1));
+    }
+
+    @Test
+    public void returnWithGenericParameters() {
+        when(mock.get(anyInt())).thenReturn("test");
+        assertEquals("test", mock.get(0));
+        assertEquals("test", mock.get(1));
     }
 }
