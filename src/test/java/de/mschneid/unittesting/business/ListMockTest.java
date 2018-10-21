@@ -1,5 +1,6 @@
 package de.mschneid.unittesting.business;
 
+import org.hibernate.validator.internal.util.stereotypes.ThreadSafe;
 import org.junit.Test;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import static org.mockito.Mockito.*;
 
 public class ListMockTest {
 
-    List mock = mock(List.class);
+    List<String> mock = mock(List.class);
 
     @Test
     public void size_basic() {
@@ -36,5 +37,19 @@ public class ListMockTest {
         when(mock.get(anyInt())).thenReturn("test");
         assertEquals("test", mock.get(0));
         assertEquals("test", mock.get(1));
+    }
+
+    @Test
+    public void verificationBasics() {
+        // SUT
+        String value = mock.get(0);
+        String value2 = mock.get(1);
+
+
+        verify(mock).get(0);
+        verify(mock, times(2)).get(anyInt());
+        verify(mock, atLeast(1)).get(anyInt());
+        verify(mock, atMost(2)).get(anyInt());
+        verify(mock, never()).get(2);
     }
 }
