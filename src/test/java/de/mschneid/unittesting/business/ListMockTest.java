@@ -2,6 +2,7 @@ package de.mschneid.unittesting.business;
 
 import org.hibernate.validator.internal.util.stereotypes.ThreadSafe;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.List;
 
@@ -46,10 +47,23 @@ public class ListMockTest {
         String value2 = mock.get(1);
 
 
+        // VERIFY
         verify(mock).get(0);
         verify(mock, times(2)).get(anyInt());
         verify(mock, atLeast(1)).get(anyInt());
         verify(mock, atMost(2)).get(anyInt());
         verify(mock, never()).get(2);
+    }
+
+    @Test
+    public void argumentCapturing() {
+        mock.add("SomeString");
+
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+
+        verify(mock).add(captor.capture());
+        assertEquals("SomeString", captor.getValue());
+
+
     }
 }
